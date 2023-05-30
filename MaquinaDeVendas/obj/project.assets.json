@@ -11099,11 +11099,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\video\\source\\repos\\MaquinaDeVendas\\MaquinaDeVendas\\MaquinaDeVendas.csproj",
+      "projectUniqueName": "C:\\Users\\video\\Documents\\GitHub\\APIMaquinaVendas\\MaquinaDeVendas\\MaquinaDeVendas.csproj",
       "projectName": "MaquinaDeVendas",
-      "projectPath": "C:\\Users\\video\\source\\repos\\MaquinaDeVendas\\MaquinaDeVendas\\MaquinaDeVendas.csproj",
+      "projectPath": "C:\\Users\\video\\Documents\\GitHub\\APIMaquinaVendas\\MaquinaDeVendas\\MaquinaDeVendas.csproj",
       "packagesPath": "C:\\Users\\video\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\video\\source\\repos\\MaquinaDeVendas\\MaquinaDeVendas\\obj\\",
+      "outputPath": "C:\\Users\\video\\Documents\\GitHub\\APIMaquinaVendas\\MaquinaDeVendas\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\video\\AppData\\Roaming\\NuGet\\NuGet.Config",

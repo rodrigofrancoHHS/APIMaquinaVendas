@@ -3,12 +3,12 @@
     public class TodosProdutos
     {
         public long Id { get; set; }
-        public string Name { get; set; }
+        public string name { get; set; }
 
-        public decimal Price { get; set; } // Propriedade para o preço
-        public int Quantity { get; set; } // Propriedade para a quantidade
+        public decimal price { get; set; } // Propriedade para o preço
 
-        public int Sold { get; set; } // Propriedade para a quantidade
+        public int quantity { get; set; } // Propriedade para a quantidade
+        public int sold { get; set; } // Propriedade para a quantidade
 
         public string? Secret { get; set; }
     }

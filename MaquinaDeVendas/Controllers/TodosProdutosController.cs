@@ -18,12 +18,20 @@ public class TodosProdutosController : ControllerBase
     }
 
     // GET: api/TodoItems
-    [HttpGet("Lista de Produtos")]
+    [HttpGet("ListadeProdutos")]
     public async Task<ActionResult<IEnumerable<TodosProdutosDTO>>> GetTodoItems()
     {
-        return await _context.TodoProdutos
-            .Select(x => ProdutosToDTO(x))
-            .ToListAsync();
+        // Ler o conteúdo do arquivo JSON
+        var filePath = "C:\\Users\\video\\Documents\\GitHub\\APIMaquinaVendas\\MaquinaDeVendas\\arquivo.json";
+        var conteudoArquivo = await System.IO.File.ReadAllTextAsync(filePath);
+
+        // Desserializar o conteúdo do arquivo em objetos
+        var produtosDeserializados = JsonConvert.DeserializeObject<TodosProdutosJson>(conteudoArquivo);
+
+        // Obter a lista de produtos do objeto desserializado
+        var produtosCarregados = produtosDeserializados?.Produtos ?? new List<TodosProdutosDTO>();
+
+        return produtosCarregados;
     }
 
     // GET: api/TodoItems/5
@@ -59,10 +67,10 @@ public class TodosProdutosController : ControllerBase
                 // O produto não existe no banco de dados, então vamos adicioná-lo
                 var novoProduto = new TodosProdutos
                 {
-                    Name = todosProdutosDTO.Name,
-                    Quantity = todosProdutosDTO.Quantity,
-                    Price = todosProdutosDTO.Price,
-                    Sold = todosProdutosDTO.Sold
+                    name = todosProdutosDTO.name,
+                    quantity = todosProdutosDTO.quantity,
+                    price = todosProdutosDTO.price,
+                    sold = todosProdutosDTO.sold
                 };
 
                 _context.TodoProdutos.Add(novoProduto);
@@ -70,10 +78,10 @@ public class TodosProdutosController : ControllerBase
             else
             {
                 // O produto já existe no banco de dados, então vamos atualizá-lo
-                produtoExistente.Name = todosProdutosDTO.Name;
-                produtoExistente.Quantity = todosProdutosDTO.Quantity;
-                produtoExistente.Price = todosProdutosDTO.Price;
-                produtoExistente.Sold = todosProdutosDTO.Sold;
+                produtoExistente.name = todosProdutosDTO.name;
+                produtoExistente.quantity = todosProdutosDTO.quantity;
+                produtoExistente.price = todosProdutosDTO.price;
+                produtoExistente.sold = todosProdutosDTO.sold;
             }
         }
 
@@ -93,10 +101,10 @@ public class TodosProdutosController : ControllerBase
         var json = JsonConvert.SerializeObject(todosProdutosJson);
 
         // Escrever o JSON em um arquivo
-        var filePath = "C:\\Users\\video\\Downloads\\arquivo.json"; // Defina o caminho e nome do arquivo desejado
+        var filePath = "C:\\Users\\video\\Documents\\GitHub\\APIMaquinaVendas\\MaquinaDeVendas\\arquivo.json"; // Defina o caminho e nome do arquivo desejado
         await System.IO.File.WriteAllTextAsync(filePath, json);
 
-        return Ok();
+        return Ok();    
     }
 
 
@@ -117,6 +125,22 @@ public class TodosProdutosController : ControllerBase
         }
 
         await _context.SaveChangesAsync();
+
+        // Atualizar o arquivo JSON após a remoção dos produtos
+        var filePath = "C:\\Users\\video\\Documents\\GitHub\\APIMaquinaVendas\\MaquinaDeVendas\\arquivo.json"; // Defina o caminho e nome do arquivo desejado
+        var conteudoArquivo = await System.IO.File.ReadAllTextAsync(filePath);
+
+        // Desserializar o conteúdo do arquivo em objetos
+        var produtosDeserializados = JsonConvert.DeserializeObject<TodosProdutosJson>(conteudoArquivo);
+
+        // Remover os produtos com os IDs fornecidos da lista carregada
+        produtosDeserializados?.Produtos.RemoveAll(p => idList.Contains(p.Id));
+
+        // Serializar a lista atualizada de produtos para JSON
+        var json = JsonConvert.SerializeObject(produtosDeserializados);
+
+        // Escrever o JSON de volta para o arquivo
+        await System.IO.File.WriteAllTextAsync(filePath, json);
 
         return Ok();
     }
@@ -141,8 +165,8 @@ public class TodosProdutosController : ControllerBase
        new TodosProdutosDTO
        {
            Id = todoProdutos.Id,
-           Name = todoProdutos.Name,
-           Quantity = todoProdutos.Quantity,
-           Price = todoProdutos.Price,
+           name = todoProdutos.name,
+           quantity = todoProdutos.quantity,
+           price = todoProdutos.price,
        };
 }
