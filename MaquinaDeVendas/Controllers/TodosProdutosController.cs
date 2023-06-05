@@ -52,7 +52,7 @@ public class TodosProdutosController : ControllerBase
 
 
 
-
+    // INPUT: É O QUE ENVIA PARA DENTRO, OUTPUT: É O QUE RECEBE PARA FORA.
 
 
     [HttpPost("InserirAtualizarProdutos")]
