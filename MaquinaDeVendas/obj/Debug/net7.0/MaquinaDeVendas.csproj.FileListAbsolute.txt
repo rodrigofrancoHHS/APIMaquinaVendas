@@ -553,3 +553,4 @@ C:\Users\video\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\obj\Debug\net7.
 C:\Users\video\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\obj\Debug\net7.0\MaquinaDeVendas.genruntimeconfig.cache
 C:\Users\video\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\obj\Debug\net7.0\ref\MaquinaDeVendas.dll
 C:\Users\video\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\bin\Debug\net7.0\arquivo.json
+C:\Users\video\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\bin\Debug\net7.0\vendas.json
