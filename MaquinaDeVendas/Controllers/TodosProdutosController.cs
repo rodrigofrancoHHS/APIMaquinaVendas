@@ -88,22 +88,6 @@ public class TodosProdutosController : ControllerBase
         // Salvar as alterações no banco de dados
         await _context.SaveChangesAsync();
 
-        // Ler os produtos atualizados do banco de dados
-        var todosProdutos = await _context.TodoProdutos.ToListAsync();
-
-        // Criar a instância da classe TodosProdutosJson e atribuir a lista de produtos
-        var todosProdutosJson = new TodosProdutosJson
-        {
-            Produtos = todosProdutos.Select(ProdutosToDTO).ToList()
-        };
-
-        // Serializar para JSON
-        var json = JsonConvert.SerializeObject(todosProdutosJson);
-
-        // Escrever o JSON em um arquivo
-        var filePath = "C:\\Users\\video\\Documents\\GitHub\\APIMaquinaVendas\\MaquinaDeVendas\\arquivo.json"; // Defina o caminho e nome do arquivo desejado
-        await System.IO.File.WriteAllTextAsync(filePath, json);
-
         return Ok();    
     }
 
