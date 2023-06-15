@@ -108,7 +108,66 @@ public class TodosProdutosController : ControllerBase
 
 
 
+    // Método de checkout
+    [HttpPost("Checkout")]
+    public async Task<ActionResult> Checkout([FromBody] List<TodosProdutosDTO> selectedItems)
+    {
+        try
+        {
+            var quantityToRemove = new Dictionary<string, int>();
 
+            // Contar a quantidade de cada item selecionado
+            foreach (var item in selectedItems)
+            {
+                if (quantityToRemove.ContainsKey(item.name))
+                {
+                    quantityToRemove[item.name] += 1;
+                }
+                else
+                {
+                    quantityToRemove[item.name] = 1;
+                }
+            }
+
+            var updatedItems = new List<TodosProdutos>();
+
+            foreach (var itemName in quantityToRemove.Keys)
+            {
+                var quantity = quantityToRemove[itemName];
+
+                // Atualizar os itens no banco de dados
+                var todosProdutos = await _context.TodoProdutos.SingleOrDefaultAsync(p => p.name == itemName);
+
+                if (todosProdutos != null)
+                {
+                    todosProdutos.quantity -= quantity;
+                    todosProdutos.sold += quantity;
+
+                    updatedItems.Add(todosProdutos);
+                }
+            }
+
+            // Salvar as alterações no banco de dados
+            await _context.SaveChangesAsync();
+
+            // Retornar os itens atualizados para a resposta
+            var responseItems = updatedItems.Select(p => new TodosProdutosDTO
+            {
+                Id = p.Id,
+                name = p.name,
+                quantity = p.quantity,
+                price = p.price,
+                sold = p.sold
+            }).ToList();
+
+            return Ok(responseItems);
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine("Erro ao atualizar os produtos no banco de dados: " + ex.Message);
+            return StatusCode(500, "Erro ao atualizar os produtos no banco de dados.");
+        }
+    }
 
 
 
@@ -128,5 +187,6 @@ public class TodosProdutosController : ControllerBase
            name = todoProdutos.name,
            quantity = todoProdutos.quantity,
            price = todoProdutos.price,
+           sold = todoProdutos.sold,
        };
 }
