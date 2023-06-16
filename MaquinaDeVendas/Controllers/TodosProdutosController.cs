@@ -108,42 +108,41 @@ public class TodosProdutosController : ControllerBase
 
 
 
-    // Método de checkout
     [HttpPost("Checkout")]
     public async Task<ActionResult<List<TodosProdutosDTO>>> Checkout([FromBody] List<TodosProdutosDTO> selectedItems)
     {
         try
         {
-            var quantityToRemove = new Dictionary<string, int>();
+            var quantityToRemove = new Dictionary<string, int>(); // Dicionário para armazenar a quantidade de cada item selecionado
 
             // Contar a quantidade de cada item selecionado
             foreach (var item in selectedItems)
             {
                 if (quantityToRemove.ContainsKey(item.name))
                 {
-                    quantityToRemove[item.name] += 1;
+                    quantityToRemove[item.name] += 1; // Se o item já está no dicionário, incrementa a quantidade em 1
                 }
                 else
                 {
-                    quantityToRemove[item.name] = 1;
+                    quantityToRemove[item.name] = 1; // Se o item não está no dicionário, adiciona com a quantidade 1
                 }
             }
 
-            var updatedItems = new List<TodosProdutos>();
+            var updatedItems = new List<TodosProdutos>(); // Lista para armazenar os produtos atualizados no banco de dados
 
             foreach (var itemName in quantityToRemove.Keys)
             {
-                var quantity = quantityToRemove[itemName];
+                var quantity = quantityToRemove[itemName]; // Obtém a quantidade do item
 
                 // Atualizar os itens no banco de dados
-                var todosProdutos = await _context.TodoProdutos.SingleOrDefaultAsync(p => p.name == itemName);
+                var todosProdutos = await _context.TodoProdutos.SingleOrDefaultAsync(p => p.name == itemName); // Procura o produto no banco de dados pelo nome
 
                 if (todosProdutos != null)
                 {
-                    todosProdutos.quantity -= quantity;
-                    todosProdutos.sold += quantity;
+                    todosProdutos.quantity -= quantity; // Subtrai a quantidade do item do produto
+                    todosProdutos.sold += quantity; // Adiciona a quantidade vendida ao produto
 
-                    updatedItems.Add(todosProdutos);
+                    updatedItems.Add(todosProdutos); // Adiciona o produto atualizado à lista
                 }
             }
 
@@ -151,7 +150,7 @@ public class TodosProdutosController : ControllerBase
             await _context.SaveChangesAsync();
 
             // Retornar todos os produtos atualizados
-            var allProducts = await _context.TodoProdutos.ToListAsync();
+            var allProducts = await _context.TodoProdutos.ToListAsync(); // Obtém todos os produtos do banco de dados
             var responseItems = allProducts.Select(p => new TodosProdutosDTO
             {
                 Id = p.Id,
@@ -159,9 +158,9 @@ public class TodosProdutosController : ControllerBase
                 quantity = p.quantity,
                 price = p.price,
                 sold = p.sold
-            }).ToList();
+            }).ToList(); // Cria uma lista de objetos TodosProdutosDTO com os produtos atualizados
 
-            return Ok(responseItems);
+            return Ok(responseItems); // Retorna a lista de produtos atualizados como resposta
         }
         catch (Exception ex)
         {
