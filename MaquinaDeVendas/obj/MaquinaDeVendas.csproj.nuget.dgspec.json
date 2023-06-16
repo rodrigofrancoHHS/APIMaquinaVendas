@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\video\\Documents\\GitHub\\APIMaquinaVendas\\MaquinaDeVendas\\MaquinaDeVendas.csproj": {}
+    "C:\\Users\\Leo\\Documents\\GitHub\\APIMaquinaVendas\\MaquinaDeVendas\\MaquinaDeVendas.csproj": {}
   },
   "projects": {
-    "C:\\Users\\video\\Documents\\GitHub\\APIMaquinaVendas\\MaquinaDeVendas\\MaquinaDeVendas.csproj": {
+    "C:\\Users\\Leo\\Documents\\GitHub\\APIMaquinaVendas\\MaquinaDeVendas\\MaquinaDeVendas.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\video\\Documents\\GitHub\\APIMaquinaVendas\\MaquinaDeVendas\\MaquinaDeVendas.csproj",
+        "projectUniqueName": "C:\\Users\\Leo\\Documents\\GitHub\\APIMaquinaVendas\\MaquinaDeVendas\\MaquinaDeVendas.csproj",
         "projectName": "MaquinaDeVendas",
-        "projectPath": "C:\\Users\\video\\Documents\\GitHub\\APIMaquinaVendas\\MaquinaDeVendas\\MaquinaDeVendas.csproj",
-        "packagesPath": "C:\\Users\\video\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\video\\Documents\\GitHub\\APIMaquinaVendas\\MaquinaDeVendas\\obj\\",
+        "projectPath": "C:\\Users\\Leo\\Documents\\GitHub\\APIMaquinaVendas\\MaquinaDeVendas\\MaquinaDeVendas.csproj",
+        "packagesPath": "C:\\Users\\Leo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Leo\\Documents\\GitHub\\APIMaquinaVendas\\MaquinaDeVendas\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\video\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Leo\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
