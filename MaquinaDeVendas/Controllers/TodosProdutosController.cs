@@ -110,7 +110,7 @@ public class TodosProdutosController : ControllerBase
 
     // Método de checkout
     [HttpPost("Checkout")]
-    public async Task<ActionResult> Checkout([FromBody] List<TodosProdutosDTO> selectedItems)
+    public async Task<ActionResult<List<TodosProdutosDTO>>> Checkout([FromBody] List<TodosProdutosDTO> selectedItems)
     {
         try
         {
@@ -150,8 +150,9 @@ public class TodosProdutosController : ControllerBase
             // Salvar as alterações no banco de dados
             await _context.SaveChangesAsync();
 
-            // Retornar os itens atualizados para a resposta
-            var responseItems = updatedItems.Select(p => new TodosProdutosDTO
+            // Retornar todos os produtos atualizados
+            var allProducts = await _context.TodoProdutos.ToListAsync();
+            var responseItems = allProducts.Select(p => new TodosProdutosDTO
             {
                 Id = p.Id,
                 name = p.name,
@@ -168,6 +169,7 @@ public class TodosProdutosController : ControllerBase
             return StatusCode(500, "Erro ao atualizar os produtos no banco de dados.");
         }
     }
+
 
 
 
