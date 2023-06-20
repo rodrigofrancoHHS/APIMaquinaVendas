@@ -2,7 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using MaquinaDeVendas.Models;
 using Newtonsoft.Json;
-using System.IO;
+using System.IO;    
+using PetaPoco;
+using System.Data;
+using MySql.Data.MySqlClient;
+
 
 namespace MaquinaDeVendas.Controllers;
 
@@ -17,13 +21,28 @@ public class TodosProdutosController : ControllerBase
         _context = context;
     }
 
+
+    string connectionString = "Server=localhost;Port=3306;Database=vendingmachine;Uid=root;";
+
     // GET: api/TodoItems
     [HttpGet("ListadeProdutos")]
     public async Task<ActionResult<IEnumerable<TodosProdutosDTO>>> GetTodoItems()
     {
-        return await _context.TodoProdutos
-           .Select(x => ProdutosToDTO(x))
-           .ToListAsync();
+        using (var db = new Database(connectionString, "MySql.Data.MySqlClient")) // Substitua "NomeDaSuaConnectionString" pela sua string de conexão do MySQL
+        {
+            var todosProdutos = await db.FetchAsync<TodosProdutos>("SELECT * FROM products");
+
+            var responseItems = todosProdutos.Select(p => new TodosProdutosDTO
+            {
+                Id = p.Id,
+                name = p.name,
+                quantity = p.quantity,
+                price = p.price,
+                sold = p.sold
+            }).ToList();
+
+            return Ok(responseItems);
+        }
     }
 
     // GET: api/TodoItems/5
@@ -47,41 +66,46 @@ public class TodosProdutosController : ControllerBase
     // INPUT: É O QUE ENVIA PARA DENTRO, OUTPUT: É O QUE RECEBE PARA FORA.
 
 
+
     [HttpPost("InserirAtualizarProdutos")]
+
     public async Task<ActionResult> PostTodosProdutos([FromBody] List<TodosProdutosDTO> todosProdutosDTOList)
     {
-        foreach (var todosProdutosDTO in todosProdutosDTOList)
+        using (var db = new Database(connectionString, "MySql.Data.MySqlClient"))
         {
-            var produtoExistente = await _context.TodoProdutos.FindAsync(todosProdutosDTO.Id);
-
-            if (produtoExistente == null)
+            foreach (var todosProdutosDTO in todosProdutosDTOList)
             {
-                // O produto não existe no banco de dados, então vamos adicioná-lo
-                var novoProduto = new TodosProdutos
+                var produtoExistente = await db.SingleOrDefaultAsync<TodosProdutos>("SELECT * FROM products WHERE id = @0", todosProdutosDTO.Id);
+
+                if (produtoExistente == null)
                 {
-                    name = todosProdutosDTO.name,
-                    quantity = todosProdutosDTO.quantity,
-                    price = todosProdutosDTO.price,
-                    sold = todosProdutosDTO.sold
-                };
+                    // O produto não existe no banco de dados, então vamos adicioná-lo
+                    var novoProduto = new TodosProdutos
+                    {
+                        name = todosProdutosDTO.name,
+                        quantity = todosProdutosDTO.quantity,
+                        price = todosProdutosDTO.price,
+                        sold = todosProdutosDTO.sold
+                    };
 
-                _context.TodoProdutos.Add(novoProduto);
-            }
-            else
-            {
-                // O produto já existe no banco de dados, então vamos atualizá-lo
-                produtoExistente.name = todosProdutosDTO.name;
-                produtoExistente.quantity = todosProdutosDTO.quantity;
-                produtoExistente.price = todosProdutosDTO.price;
-                produtoExistente.sold = todosProdutosDTO.sold;
+                    await db.InsertAsync("products", "id", true, novoProduto);
+                }
+                else
+                {
+                    // O produto já existe no banco de dados, então vamos atualizá-lo
+                    produtoExistente.name = todosProdutosDTO.name;
+                    produtoExistente.quantity = todosProdutosDTO.quantity;
+                    produtoExistente.price = todosProdutosDTO.price;
+                    produtoExistente.sold = todosProdutosDTO.sold;
+
+                    await db.UpdateAsync("products", "id", produtoExistente);
+                }
             }
         }
 
-        // Salvar as alterações no banco de dados
-        await _context.SaveChangesAsync();
-
-        return Ok();    
+        return Ok();
     }
+
 
 
 
@@ -90,17 +114,13 @@ public class TodosProdutosController : ControllerBase
     [HttpPost("Eliminar Produtos")]
     public async Task<ActionResult> DeleteTodosProdutos([FromBody] List<long> idList)
     {
-        foreach (var id in idList)
+        using (var db = new Database(connectionString, "MySql.Data.MySqlClient")) // Substitua "NomeDaSuaConnectionString" pela sua string de conexão do MySQL
         {
-            var todosProdutos = await _context.TodoProdutos.FindAsync(id);
-
-            if (todosProdutos != null)
+            foreach (var id in idList)
             {
-                _context.TodoProdutos.Remove(todosProdutos);
+                await db.DeleteAsync("products", "id", null, id);
             }
         }
-
-        await _context.SaveChangesAsync();
 
         return Ok();
     }
@@ -113,54 +133,54 @@ public class TodosProdutosController : ControllerBase
     {
         try
         {
-            var quantityToRemove = new Dictionary<string, int>(); // Dicionário para armazenar a quantidade de cada item selecionado
-
-            // Contar a quantidade de cada item selecionado
-            foreach (var item in selectedItems)
+            using (var db = new Database(connectionString, "MySql.Data.MySqlClient")) // Substitua "NomeDaSuaConnectionString" pela sua string de conexão do MySQL
             {
-                if (quantityToRemove.ContainsKey(item.name))
+                var quantityToRemove = new Dictionary<string, int>();
+
+                foreach (var item in selectedItems)
                 {
-                    quantityToRemove[item.name] += 1; // Se o item já está no dicionário, incrementa a quantidade em 1
+                    if (quantityToRemove.ContainsKey(item.name))
+                    {
+                        quantityToRemove[item.name] += 1;
+                    }
+                    else
+                    {
+                        quantityToRemove[item.name] = 1;
+                    }
                 }
-                else
+
+                var updatedItems = new List<TodosProdutos>();
+
+                foreach (var itemName in quantityToRemove.Keys)
                 {
-                    quantityToRemove[item.name] = 1; // Se o item não está no dicionário, adiciona com a quantidade 1
+                    var quantity = quantityToRemove[itemName];
+
+                    var todosProdutos = await db.SingleOrDefaultAsync<TodosProdutos>("SELECT * FROM products WHERE name = @0", itemName);
+
+                    if (todosProdutos != null)
+                    {
+                        todosProdutos.quantity -= quantity;
+                        todosProdutos.sold += quantity;
+
+                        updatedItems.Add(todosProdutos);
+
+                        await db.UpdateAsync("products", "id", todosProdutos);
+                    }
                 }
+
+                var allProducts = await db.FetchAsync<TodosProdutos>("SELECT * FROM products");
+
+                var responseItems = allProducts.Select(p => new TodosProdutosDTO
+                {
+                    Id = p.Id,
+                    name = p.name,
+                    quantity = p.quantity,
+                    price = p.price,
+                    sold = p.sold
+                }).ToList();
+
+                return Ok(responseItems);
             }
-
-            var updatedItems = new List<TodosProdutos>(); // Lista para armazenar os produtos atualizados no banco de dados
-
-            foreach (var itemName in quantityToRemove.Keys)
-            {
-                var quantity = quantityToRemove[itemName]; // Obtém a quantidade do item
-
-                // Atualizar os itens no banco de dados
-                var todosProdutos = await _context.TodoProdutos.SingleOrDefaultAsync(p => p.name == itemName); // Procura o produto no banco de dados pelo nome
-
-                if (todosProdutos != null)
-                {
-                    todosProdutos.quantity -= quantity; // Subtrai a quantidade do item do produto
-                    todosProdutos.sold += quantity; // Adiciona a quantidade vendida ao produto
-
-                    updatedItems.Add(todosProdutos); // Adiciona o produto atualizado à lista
-                }
-            }
-
-            // Salvar as alterações no banco de dados
-            await _context.SaveChangesAsync();
-
-            // Retornar todos os produtos atualizados
-            var allProducts = await _context.TodoProdutos.ToListAsync(); // Obtém todos os produtos do banco de dados
-            var responseItems = allProducts.Select(p => new TodosProdutosDTO
-            {
-                Id = p.Id,
-                name = p.name,
-                quantity = p.quantity,
-                price = p.price,
-                sold = p.sold
-            }).ToList(); // Cria uma lista de objetos TodosProdutosDTO com os produtos atualizados
-
-            return Ok(responseItems); // Retorna a lista de produtos atualizados como resposta
         }
         catch (Exception ex)
         {
