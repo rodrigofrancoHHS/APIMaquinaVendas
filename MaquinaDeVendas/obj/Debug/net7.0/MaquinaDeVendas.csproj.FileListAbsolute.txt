@@ -833,3 +833,16 @@ C:\Users\Leo\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\obj\Debug\net7.0\
 C:\Users\Leo\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\obj\Debug\net7.0\MaquinaDeVendas.pdb
 C:\Users\Leo\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\obj\Debug\net7.0\MaquinaDeVendas.genruntimeconfig.cache
 C:\Users\Leo\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\obj\Debug\net7.0\ref\MaquinaDeVendas.dll
+C:\Users\Leo\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\bin\Debug\net7.0\Google.Protobuf.dll
+C:\Users\Leo\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\bin\Debug\net7.0\K4os.Compression.LZ4.dll
+C:\Users\Leo\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\bin\Debug\net7.0\K4os.Compression.LZ4.Streams.dll
+C:\Users\Leo\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\bin\Debug\net7.0\K4os.Hash.xxHash.dll
+C:\Users\Leo\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\bin\Debug\net7.0\MySql.Data.dll
+C:\Users\Leo\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\bin\Debug\net7.0\MySqlConnector.dll
+C:\Users\Leo\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\bin\Debug\net7.0\PetaPoco.dll
+C:\Users\Leo\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\bin\Debug\net7.0\BouncyCastle.Crypto.dll
+C:\Users\Leo\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\bin\Debug\net7.0\runtimes\win-x64\native\comerr64.dll
+C:\Users\Leo\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\bin\Debug\net7.0\runtimes\win-x64\native\gssapi64.dll
+C:\Users\Leo\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\bin\Debug\net7.0\runtimes\win-x64\native\k5sprt64.dll
+C:\Users\Leo\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\bin\Debug\net7.0\runtimes\win-x64\native\krb5_64.dll
+C:\Users\Leo\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\bin\Debug\net7.0\runtimes\win-x64\native\krbcc64.dll
