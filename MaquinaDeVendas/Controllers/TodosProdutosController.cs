@@ -6,6 +6,7 @@ using System.IO;
 using PetaPoco;
 using System.Data;
 using MySql.Data.MySqlClient;
+using AutoMapper;
 
 
 namespace MaquinaDeVendas.Controllers;
@@ -19,6 +20,7 @@ public class TodosProdutosController : ControllerBase
     public TodosProdutosController(ProdutosContext context)
     {
         _context = context;
+        
     }
 
 
@@ -28,20 +30,30 @@ public class TodosProdutosController : ControllerBase
     [HttpGet("ListadeProdutos")]
     public async Task<ActionResult<IEnumerable<TodosProdutosDTO>>> GetTodoItems()
     {
+
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<TodosProdutos, TodosProdutosDTO>();
+        });
+
+        AutoMapper.IMapper _mapper = config.CreateMapper();
+
+
         using (var db = new Database(connectionString, "MySql.Data.MySqlClient")) // Substitua "NomeDaSuaConnectionString" pela sua string de conexão do MySQL
         {
             var todosProdutos = await db.FetchAsync<TodosProdutos>("SELECT * FROM products");
 
-            var responseItems = todosProdutos.Select(p => new TodosProdutosDTO
+            var responseItems = _mapper.Map<List<TodosProdutosDTO>>(todosProdutos);
+            /*var responseItems = todosProdutos.Select(p => new TodosProdutosDTO
             {
                 Id = p.Id,
                 name = p.name,
                 quantity = p.quantity,
                 price = p.price,
                 sold = p.sold
-            }).ToList();
+            }).ToList(); */
 
-            return Ok(responseItems);
+            return Ok(responseItems); 
         }
     }
 

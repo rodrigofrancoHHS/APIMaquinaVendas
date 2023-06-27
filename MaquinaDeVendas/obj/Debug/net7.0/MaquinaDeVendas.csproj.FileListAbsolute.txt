@@ -567,3 +567,4 @@ C:\Users\video\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\bin\Debug\net7.
 C:\Users\video\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\bin\Debug\net7.0\runtimes\win-x64\native\krb5_64.dll
 C:\Users\video\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\bin\Debug\net7.0\runtimes\win-x64\native\krbcc64.dll
 C:\Users\video\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\bin\Debug\net7.0\MySqlConnector.dll
+C:\Users\video\Documents\GitHub\APIMaquinaVendas\MaquinaDeVendas\bin\Debug\net7.0\AutoMapper.dll

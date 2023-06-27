@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "sa69cQG4DDFEJ5IzFyEldSA5YNCAl8oKntQ50pY6ZjiWBzCgXzlvADIQxvgDDigu6FERdKXzZP276DGqNVTDzw==",
+  "dgSpecHash": "9388R2PyAdXGww9r1yq2hI5zEfgAc4Qb8OqtRcltA/tFQjZJeUXYEltjjwTk87qPMigs8CeCY3NWxWnLAoPZsw==",
   "success": true,
   "projectFilePath": "C:\\Users\\video\\Documents\\GitHub\\APIMaquinaVendas\\MaquinaDeVendas\\MaquinaDeVendas.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\video\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\video\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\video\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\video\\.nuget\\packages\\google.protobuf\\3.21.9\\google.protobuf.3.21.9.nupkg.sha512",
