@@ -9,5 +9,6 @@
 
         public int quantity { get; set; } // Propriedade para a quantidade
         public int sold { get; set; } // Propriedade para a quantidade
+
     }
 }
