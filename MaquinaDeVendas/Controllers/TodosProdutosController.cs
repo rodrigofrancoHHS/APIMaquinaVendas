@@ -72,6 +72,16 @@ namespace MaquinaDeVendas.Controllers
         [HttpPost("InserirAtualizarProdutos")]
         public async Task<ActionResult> PostTodosProdutos([FromBody] List<TodosProdutosDTO> todosProdutosDTOList)
         {
+
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<TodosProdutosDTO, TodosProdutos>();
+            });
+
+            AutoMapper.IMapper _mapper = config.CreateMapper();
+
+
+
             using (var db = new Database(connectionString, "MySql.Data.MySqlClient"))
             {
                 foreach (var todosProdutosDTO in todosProdutosDTOList)
@@ -80,22 +90,29 @@ namespace MaquinaDeVendas.Controllers
 
                     if (produtoExistente == null)
                     {
-                        var novoProduto = new TodosProdutos
+
+                        var novoProduto = _mapper.Map<TodosProdutos>(todosProdutosDTO);
+
+                         
+                        /*var novoProduto = new TodosProdutos
                         {
                             name = todosProdutosDTO.name,
                             quantity = todosProdutosDTO.quantity,
                             price = todosProdutosDTO.price,
                             sold = todosProdutosDTO.sold
-                        };
+                        }; */
 
                         await db.InsertAsync("products", "id", true, novoProduto);
                     }
                     else
                     {
-                        produtoExistente.name = todosProdutosDTO.name;
-                        produtoExistente.quantity = todosProdutosDTO.quantity;
-                        produtoExistente.price = todosProdutosDTO.price;
-                        produtoExistente.sold = todosProdutosDTO.sold;
+
+                        var produtoAtualizado = _mapper.Map(todosProdutosDTO, produtoExistente);
+
+                        /* produtoExistente.name = todosProdutosDTO.name;
+                         produtoExistente.quantity = todosProdutosDTO.quantity;
+                         produtoExistente.price = todosProdutosDTO.price;
+                         produtoExistente.sold = todosProdutosDTO.sold; */
 
                         await db.UpdateAsync("products", "id", produtoExistente);
                     }
@@ -122,6 +139,15 @@ namespace MaquinaDeVendas.Controllers
         [HttpPost("Checkout")]
         public async Task<ActionResult<List<TodosProdutosDTO>>> Checkout([FromBody] List<TodosProdutosDTO> selectedItems)
         {
+
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<TodosProdutos, TodosProdutosDTO>();
+            });
+
+            AutoMapper.IMapper _mapper = config.CreateMapper();
+
+
             try
             {
                 using (var db = new Database(connectionString, "MySql.Data.MySqlClient"))
@@ -161,14 +187,16 @@ namespace MaquinaDeVendas.Controllers
 
                     var allProducts = await db.FetchAsync<TodosProdutos>("SELECT * FROM products");
 
-                    var responseItems = allProducts.Select(p => new TodosProdutosDTO
+                    var responseItems = _mapper.Map<List<TodosProdutos>>(allProducts);
+
+                   /* var responseItems = allProducts.Select(p => new TodosProdutosDTO
                     {
                         Id = p.Id,
                         name = p.name,
                         quantity = p.quantity,
                         price = p.price,
                         sold = p.sold
-                    }).ToList();
+                    }).ToList(); */
 
                     return Ok(responseItems);
                 }
