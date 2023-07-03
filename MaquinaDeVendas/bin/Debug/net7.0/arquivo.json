@@ -1,1 +1,133 @@
-{{"Produtos":[{"Id":1,"name":"Coca-cola","price":1.20,"quantity":10,"sold":0},{"Id":2,"name":"Sprite","price":0.80,"quantity":5,"sold":0},{"Id":3,"name":"Ice-Tea","price":1.20,"quantity":15,"sold":0},{"Id":4,"name":"Pepsi","price":0.85,"quantity":14,"sold":0},{"Id":5,"name":"Bongo","price":0.99,"quantity":9,"sold":0},{"Id":6,"name":"Monster","price":1.40,"quantity":20,"sold":0},{"Id":7,"name":"Guaraná","price":1.00,"quantity":10,"sold":0},{"Id":8,"name":"Sumol","price":1.10,"quantity":1,"sold":0},{"Id":9,"name":"Chá","price":1.25,"quantity":4,"sold":0},{"Id":10,"name":"Água","price":1.30,"quantity":16,"sold":0},{"Id":11,"name":"7UP","price":0.85,"quantity":17,"sold":0},{"Id":12,"name":"Café","price":0.80,"quantity":20,"sold":0}]}
+{
+  {
+    "Produtos": [
+      {
+        "Id": 1,
+        "name": "Coca-cola",
+        "price": 1.20,
+        "quantity": 10,
+        "sold": 0
+      },
+      {
+        "Id": 2,
+        "name": "Sprite",
+        "price": 0.80,
+        "quantity": 5,
+        "sold": 0
+      },
+      {
+        "Id": 3,
+        "name": "Ice-Tea",
+        "price": 1.20,
+        "quantity": 15,
+        "sold": 0
+      },
+      {
+        "Id": 4,
+        "name": "Pepsi",
+        "price": 0.85,
+        "quantity": 14,
+        "sold": 0
+      },
+      {
+        "Id": 5,
+        "name": "Bongo",
+        "price": 0.99,
+        "quantity": 9,
+        "sold": 0
+      },
+      {
+        "Id": 6,
+        "name": "Monster",
+        "price": 1.40,
+        "quantity": 20,
+        "sold": 0
+      },
+      {
+        "Id": 7,
+        "name": "Guaraná",
+        "price": 1.00,
+        "quantity": 10,
+        "sold": 0
+      },
+      {
+        "Id": 8,
+        "name": "Sumol",
+        "price": 1.10,
+        "quantity": 1,
+        "sold": 0
+      },
+      {
+        "Id": 9,
+        "name": "Chá",
+        "price": 1.25,
+        "quantity": 4,
+        "sold": 0
+      },
+      {
+        "Id": 10,
+        "name": "Água",
+        "price": 1.30,
+        "quantity": 16,
+        "sold": 0
+      },
+      {
+        "Id": 11,
+        "name": "7UP",
+        "price": 0.85,
+        "quantity": 17,
+        "sold": 0
+      },
+      {
+        "Id": 12,
+        "name": "Café",
+        "price": 0.80,
+        "quantity": 20,
+        "sold": 0
+      }
+    ]
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+  {
+    "name": "1 cêntimo",
+    "price": 0.01
+  },
+  {
+    "name": "2 cêntimos",
+    "price": 0.02
+  },
+  {
+    "name": "5 cêntimos",
+    "price": 0.05
+  },
+  {
+    "name": "10 cêntimos",
+    "price": 0.10
+  },
+  {
+    "name": "20 cêntimos",
+    "price": 0.20
+  },
+  {
+    "name": "50 cêntimos",
+    "price": 0.50
+  },
+  {
+    "name": "1 euro",
+    "price": 1.00
+  },
+  {
+    "name": "2 euros",
+    "price": 2.00
+  }
